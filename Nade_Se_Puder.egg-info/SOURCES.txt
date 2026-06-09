@@ -1,0 +1,6 @@
+README
+setup.py
+Nade_Se_Puder.egg-info/PKG-INFO
+Nade_Se_Puder.egg-info/SOURCES.txt
+Nade_Se_Puder.egg-info/dependency_links.txt
+Nade_Se_Puder.egg-info/top_level.txt

@@ -1,22 +1,7 @@
-import os, time
+import os, time 
 import json
 
-def limpar_tela():
 
-    os.system("cls" if os.name == "nt" else "clear")
-    
-def aguarde(segundos):
-    time.sleep(segundos)
-    
-def inicializarBancoDeDados():
-    try:
-        banco = open("base.atitus", "r")
-        banco.close()
-    except FileNotFoundError:
-        print("Banco de Dados Inexistente. Criando...")
-        banco = open("base.atitus", "w")
-        banco.close()
-    
 def escreverDados(nome, pontos, data):
     # Lendo os dados existentes
     try:
@@ -27,14 +12,16 @@ def escreverDados(nome, pontos, data):
         dados = ""
         
     if dados != "":
-        dadosDict = json.loads(dados)
+        try:
+            dadosDict = json.loads(dados)
+        except json.JSONDecodeError:
+            dadosDict = {} # Se o arquivo estiver corrompido, reseta para não travar
     else:
         dadosDict = {}
         
     if nome not in dadosDict or pontos > dadosDict[nome][0]:
         dadosDict[nome] = [pontos, data]
     
-   
     banco = open("base.atitus", "w")
     banco.write(json.dumps(dadosDict))
     banco.close()
@@ -48,7 +35,10 @@ def maior_pontuador():
         dados = ""
         
     if dados != "":
-        dadosDict = json.loads(dados)
+        try:
+            dadosDict = json.loads(dados)
+        except json.JSONDecodeError:
+            dadosDict = {} 
     else:
         dadosDict = {}
 
@@ -57,9 +47,7 @@ def maior_pontuador():
     maior_pontos = -1
 
     for nome, info in dadosDict.items():
-      
         pontos = info[0]
-        
         if pontos > maior_pontos:
             maior_pontos = pontos
             nome_maior = nome

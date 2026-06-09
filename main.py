@@ -3,27 +3,25 @@ import random
 from datetime import datetime
 import pyttsx3
 import recursos.trabalho
-from recursos.funcoes import inicializarBancoDeDados, limpar_tela, escreverDados, maior_pontuador
+from recursos.funcoes import *
 from recursos.trabalho import desenhar_concha
 
 ##Luana esteve aqui!!
-limpar_tela()
-inicializarBancoDeDados()
 nome_maior, maior_pontos, dataJogada = maior_pontuador()
 pygame.init()
 
 def dar_boas_vindas(nome_jogador):
     engine = pyttsx3.init()
-    engine.say(f"Bem-vindo, {nome_jogador}. Nade se puder!")
+    engine.say(f"Bem-vindo, {nome_jogador}." )
     engine.runAndWait()
 
 while True:
-    nome = input("Informe Nome Competidor:")
+    nome = input("Informe Nome Competidor:" )
     if len(nome) > 0: 
         dar_boas_vindas(nome)
         break
     else:
-        print("Nome Inválido!")
+        print("Nome Inválido!" )
 
 tamanho = (1000,700)
 pygame.display.set_caption("Nade Se Puder - Luiza")
@@ -104,7 +102,7 @@ def jogar():
     pausado = False 
 
     while True:
-        # 1. Os eventos agora SÓ cuidam de fechar o jogo ou pausar
+       
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 pygame.quit()
@@ -118,7 +116,7 @@ def jogar():
         if not pausado:
     
             teclas = pygame.key.get_pressed()
-            movimentoYPersona = 0 # Zera o movimento se nada estiver pressionado
+            movimentoYPersona = 0 
             
             if teclas[pygame.K_UP]:
                 movimentoYPersona = -velocidadeMovPersona
@@ -182,7 +180,9 @@ def jogar():
 
             if rect_persona.colliderect(rect_tubarao):
                 data_hora_atual = datetime.now().strftime("%d/%m/%Y %H:%M")
-                escreverDados(nome, pontos, data_hora_atual) 
+                escreverDados(nome, pontos, data_hora_atual)
+                salvar_log(nome, pontos) 
+
                 dead()
         
         if pausado:
